@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zini_task/custom_widgets/custom_button.dart';
 import 'package:zini_task/custom_widgets/custom_text_field.dart';
 import 'package:zini_task/resources/app_color.dart';
 import 'package:zini_task/resources/image_assets.dart';
 import 'package:zini_task/resources/text_styles.dart';
+import 'package:zini_task/utils/utils.dart';
 import 'package:zini_task/view/home_page.dart';
+import 'package:zini_task/view_models/auth_provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController apiKeyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    // emailController.text = "user1@example.com";
+    // apiKeyController.text = "apiKey1";
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -75,21 +81,31 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: 32,
                     ),
-                    CustomButton(
-                      height: 46,
-                      width: 288,
-                      borderRadius: 20,
-                      buttonText: 'Log in',
-                      onPressed: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
+                    Consumer<AuthProvider>(
+                      builder: (context, provider, child) {
+                        return CustomButton(
+                          height: 46,
+                          width: 288,
+                          borderRadius: 20,
+                          buttonText: 'Log in',
+                          loading: provider.loading,
+                          onPressed: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            if (emailController.text.isNotEmpty &&
+                                apiKeyController.text.isNotEmpty) {
+                              provider.login(
+                                  email: emailController.text.trim(),
+                                  apiKey: apiKeyController.text.trim(),
+                                  context: context);
+                            }else{
+                              Utils.toastMessageCenter("All Fields are Required" , );
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                            }
+                          },
+                          textStyle:
+                              montserrat(size: 18, color: AppColor.fillColor),
+                        );
                       },
-                      textStyle:
-                          montserrat(size: 18, color: AppColor.fillColor),
                     )
                   ],
                 ),

@@ -28,7 +28,7 @@ class CustomTextField extends StatelessWidget {
         cursorColor: AppColor.primaryColor,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(16),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
           filled: true,
           fillColor: AppColor.fillColor,
           hintText: hintText,
