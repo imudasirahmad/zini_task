@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background/flutter_background.dart';
 import 'package:zini_task/repository/auth_repository.dart';
@@ -21,6 +20,11 @@ class AuthProvider extends ChangeNotifier {
 
   set loading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+
+  set isBackgroundRunning(bool value) {
+    _isBackgroundRunning = value;
     notifyListeners();
   }
 
